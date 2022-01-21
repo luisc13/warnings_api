@@ -11,14 +11,14 @@ class CreateUserController{
       }
     });
     
-    if(alreadyExists){
-      return response.status(400).json({
-        error: "User already exists"
-    });
-    } else {
+    if(!alreadyExists){
       const createUser = new CreateUserService();
       const user = await createUser.execute(type, username, password);
       return response.json(user);
+    } else {
+      return response.status(400).json({
+        error: "User already exists"
+    });
     }
   }
 }
